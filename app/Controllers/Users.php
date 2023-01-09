@@ -21,6 +21,16 @@ class Users extends BaseController
 
         helper(['form']);
 
+        if($this->request->getMethod() == 'post')
+        {
+            //lets do validation here
+            $rules = [
+                'firstname' => 'required|min_length[3]|max_length[20]',
+                'lastname' => 'required|min_length[3]|max_length[20]',
+                'email' => 'required|'
+            ];
+        }
+
         echo view('templates/header', $data);
         echo view('register', $data);
         echo view('templates/footer', $data);
