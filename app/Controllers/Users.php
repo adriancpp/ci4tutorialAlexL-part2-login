@@ -8,9 +8,40 @@ class Users extends BaseController
 {
     public function index()
     {
-        $data = [];
+        //login
 
+        $data = [];
         helper(['form']);
+
+        if($this->request->getMethod() == 'post')
+        {
+            //lets do validation here
+            $rules = [
+                'email' => 'required|min_length[6]|max_length[50]|valid_email',
+                'password' => 'required|min_length[8]|max_length[255]|validateUser[email,password]',
+            ];
+            
+            $errors = [
+                //2;30
+            ];
+
+            if( !$this->validate($rules))
+            {
+                $data['validation'] = $this->validator;
+            }
+            else {
+                $model = new UserModel();
+
+                $newData = [
+                    'email' => $this->request->getVar('email'),
+                    'password' => $this->request->getVar('password'),
+                ];
+                $model->save($newData);
+                $session = session();
+                $session->setFlashdata('success', 'Successful Registration');
+                return redirect()->to('/');
+            }
+        }
 
         echo view('templates/header', $data);
         echo view('login', $data);
@@ -20,7 +51,6 @@ class Users extends BaseController
     public function register()
     {
         $data = [];
-
         helper(['form']);
 
         if($this->request->getMethod() == 'post')
