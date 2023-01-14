@@ -29,19 +29,19 @@ class Users extends BaseController
 
             if( !$this->validate($rules, $errors))
             {
-                $data['validation'] = $this->validator; //4:20
+                $data['validation'] = $this->validator;
             }
             else {
                 $model = new UserModel();
 
-                $newData = [
-                    'email' => $this->request->getVar('email'),
-                    'password' => $this->request->getVar('password'),
-                ];
-                $model->save($newData);
-                $session = session();
-                $session->setFlashdata('success', 'Successful Registration');
-                return redirect()->to('/');
+//                $newData = [
+//                    'email' => $this->request->getVar('email'),
+//                    'password' => $this->request->getVar('password'),
+//                ];
+//                $model->save($newData);
+//                $session = session();
+//                $session->setFlashdata('success', 'Successful Registration');
+//                return redirect()->to('/');
             }
         }
 
