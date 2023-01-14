@@ -22,12 +22,14 @@ class Users extends BaseController
             ];
             
             $errors = [
-                //2;30
+                'password' => [
+                    'validateUser' => 'Email or Password dont match'
+                ]
             ];
 
-            if( !$this->validate($rules))
+            if( !$this->validate($rules, $errors))
             {
-                $data['validation'] = $this->validator;
+                $data['validation'] = $this->validator; //4:20
             }
             else {
                 $model = new UserModel();
