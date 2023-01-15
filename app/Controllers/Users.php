@@ -34,20 +34,32 @@ class Users extends BaseController
             else {
                 $model = new UserModel();
 
-//                $newData = [
-//                    'email' => $this->request->getVar('email'),
-//                    'password' => $this->request->getVar('password'),
-//                ];
-//                $model->save($newData);
-//                $session = session();
-//                $session->setFlashdata('success', 'Successful Registration');
-//                return redirect()->to('/');
+                $user = $model->where('email', $this->request->getVar('email'))
+                    ->first();
+
+                $this->setUserSession($user);
+
+                return redirect()->to('dashboard');
             }
         }
 
         echo view('templates/header', $data);
         echo view('login', $data);
         echo view('templates/footer', $data);
+    }
+
+    private function setUserSession($user)
+    {
+        $data = [
+            'id' => $user['id'],
+            'firstname' => $user['firstname'],
+            'lastname' => $user['lastname'],
+            'email' => $user['email'],
+            'isLoggedIn' => true,
+        ];
+
+        session()->set($data);
+        return true;
     }
 
     public function register()
