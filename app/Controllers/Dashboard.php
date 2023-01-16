@@ -8,6 +8,9 @@ class Dashboard extends BaseController
     {
         $data = [];
 
+        //use filters instead of that to protect
+        //        if(!session()->get('isLoggedIn'))
+        //            redirect()->to('/');
 
         echo view('templates/header', $data);
         echo view('dashboard', $data);
